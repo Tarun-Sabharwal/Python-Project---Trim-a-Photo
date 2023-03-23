@@ -1,0 +1,40 @@
+// code starts from here
+
+from PIL import Image
+import os
+from tkinter import filedialog, Tk
+
+# Create a Tkinter window
+root = Tk()
+
+# Hide the main window
+root.withdraw()
+
+# Open a file dialog to select an image file
+file_path = filedialog.askopenfilename()
+
+# Check if the file selected is an image
+if not file_path.lower().endswith(('.jpg', '.jpeg', '.png', '.bmp', '.gif')):
+    print('Error: File selected is not an image')
+else:
+    # Open the image file
+    image = Image.open(file_path)
+
+    # Define the area to be cropped
+    left = 100
+    top = 100
+    right = 400
+    bottom = 400
+
+    # Crop the image using the defined area
+    cropped_image = image.crop((left, top, right, bottom))
+
+    # Convert the image to RGB mode if it is in RGBA mode
+    if cropped_image.mode == 'RGBA':
+        cropped_image = cropped_image.convert('RGB')
+
+    # Save the cropped image as a JPEG file
+    save_path = filedialog.asksaveasfilename(defaultextension='.jpg')
+    cropped_image.save(save_path)
+    
+    
